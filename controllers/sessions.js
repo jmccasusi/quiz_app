@@ -4,9 +4,19 @@ const sessions = express.Router();
 
 const User = require('../models/users.js');
 
-sessions.get('/new', (req, res) => {
-	res.render('sessions/new.ejs', {
-        currentUser: req.session.currentUser
+sessions.get('/login', (req, res) => {
+	res.render('index.ejs', {
+        currentUser: req.session.currentUser,
+        classification: "strangers",
+        pageToRender: "login"
+      });
+});
+
+sessions.get('/register', (req, res) => {
+	res.render('index.ejs', {
+        currentUser: req.session.currentUser,
+        classification: "strangers",
+        pageToRender: "register"
       });
 });
 

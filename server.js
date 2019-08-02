@@ -41,7 +41,7 @@ app.use('/teachers', teachersController);
 // Routes
 app.get('/' , (req, res) => {
   res.render('index.ejs', {
-      classification: "teachers",
+      classification: "strangers",
       pageToRender: "home"
   });
 });

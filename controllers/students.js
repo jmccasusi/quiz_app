@@ -6,7 +6,7 @@ const students = express.Router();
 const User = require('../models/users.js');
 
 // ROUTES
-students.get('/home', (req, res) => {
+students.get('/', (req, res) => {
 	res.render('index.ejs', {
 		currentUser: req.session.currentUser,
 		classification: "students",
