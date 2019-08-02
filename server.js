@@ -40,7 +40,10 @@ app.use('/teachers', teachersController);
 
 // Routes
 app.get('/' , (req, res) => {
-  res.render('index.ejs');
+  res.render('index.ejs', {
+      classification: "teachers",
+      pageToRender: "home"
+  });
 });
 
 // Listener
