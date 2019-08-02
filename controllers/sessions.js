@@ -2,8 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const sessions = express.Router();
 
-const Students = require('../models/students.js');
-const Teachers = require('../models/teachers.js');
+const User = require('../models/users.js');
 
 sessions.get('/new', (req, res) => {
 	res.render('sessions/new.ejs', {
@@ -14,7 +13,7 @@ sessions.get('/new', (req, res) => {
 sessions.post('/login', (req, res) => {
     console.log('Im here');
     console.log(req.body);
-	Students.findOne({ name: req.body.name }, (err, foundUser) => {
+	User.findOne({ name: req.body.name }, (err, foundUser) => {
         if(err){
             console.log(err);
         } else {

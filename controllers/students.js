@@ -3,7 +3,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const students = express.Router();
 
-const User = require('../models/students.js');
+const User = require('../models/users.js');
 
 // ROUTES
 students.get('/new', (req, res) => {

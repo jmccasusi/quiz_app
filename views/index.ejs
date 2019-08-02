@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <% include ./partials/head.ejs %>
 </head>
+
 <body>
-    <h1>HELLO THIS IS INDEX</h1>
+    <div class="container">
+        <div>
+            <% include ./partials/nav.ejs %>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                CTRL PANEL
+            </div>
+            <div class="col-sm-8 col-lg-7">
+                CONTENT
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
