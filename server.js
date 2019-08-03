@@ -34,16 +34,24 @@ app.use(express.static('public'))
 const studentsController = require('./controllers/students.js');
 const teachersController = require('./controllers/teachers.js');
 const sessionsController = require('./controllers/sessions.js');
-app.use('/sessions', sessionsController);
+app.use(sessionsController);
 app.use('/students', studentsController);
 app.use('/teachers', teachersController);
 
 // Routes
 app.get('/' , (req, res) => {
-  res.render('index.ejs', {
-      classification: "strangers",
-      pageToRender: "home"
-  });
+    if(req.session.currentUser){
+        if(req.session.currentUser.classification==="student"){
+            res.redirect('/students');
+        } else {
+            res.redirect('/teachers');
+        }
+    } else {
+        res.render('index.ejs', {
+            currentUser: {classification: "strangers"},
+            pageToRender: "home"
+        });
+    }
 });
 
 // Listener

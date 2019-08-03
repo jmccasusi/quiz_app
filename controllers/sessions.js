@@ -2,28 +2,35 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const sessions = express.Router();
 
-const User = require('../models/users.js');
+const userModel = require('../models/users.js');
 
 sessions.get('/login', (req, res) => {
-	res.render('index.ejs', {
-        currentUser: req.session.currentUser,
-        classification: "strangers",
-        pageToRender: "login"
-      });
+
+    if(req.session.currentUser){
+        res.redirect('/');
+    } else {
+        res.render('index.ejs', {
+            currentUser: {classification: "strangers"},
+            pageToRender: "login"
+          });
+    }
 });
 
 sessions.get('/register', (req, res) => {
-	res.render('index.ejs', {
-        currentUser: req.session.currentUser,
-        classification: "strangers",
-        pageToRender: "register"
-      });
+    if(req.session.currentUser){
+        res.redirect('/');
+    } else {
+        res.render('index.ejs', {
+            currentUser: {classification: "strangers"},
+            pageToRender: "register"
+          });
+    }
 });
 
 sessions.post('/login', (req, res) => {
     console.log('Im here');
     console.log(req.body);
-	User.findOne({ name: req.body.name }, (err, foundUser) => {
+	userModel.User.findOne({ name: req.body.name }, (err, foundUser) => {
         if(err){
             console.log(err);
         } else {
@@ -35,6 +42,25 @@ sessions.post('/login', (req, res) => {
             }
         }
 	});
+});
+
+
+sessions.post('/register', (req, res) => {
+    if(req.body.password === req.body.passwordCheck){
+        req.body.password = bcrypt.hashSync(
+            req.body.password,
+            bcrypt.genSaltSync(10)
+        );
+        userModel.User.create(req.body, (err, createdUser) => {
+            req.session.currentUser = createdUser;
+            console.log(createdUser);
+            res.redirect('/');
+        });
+    } else {
+        res.redirect('/register');
+    }
+
+	
 });
 
 sessions.delete('/', (req, res) => {

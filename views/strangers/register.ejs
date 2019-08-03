@@ -1,9 +1,67 @@
 <div class="jumbotron">
-        <h1 class="display-4">This is the Sign Up Page!</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
-            attention to featured content or information.</p>
+    <h3 class="display-4">Registration Form</h3>
+    <hr class="my-4">
+    <form action="/register" method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+            </div>
+        </div>
         <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger
-            container.</p>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="classification">Account Type</label>
+                <select id="classification" name="classification" class="form-control">
+                    <option value="students" selected>Student</option>
+                    <option value="teachers">Teacher</option>
+                </select>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="passwordCheck">Re-type Password</label>
+                <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="Password">
+            </div>
+
+
+
+            <!-- <div class="form-group">
+                <label for="inputAddress2">Address 2</label>
+                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+            </div>
+                <div class="form-group col-md-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" id="inputCity">
+                </div>
+                
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" id="inputZip">
+                </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                        Check me out
+                    </label>
+                </div> -->
+        </div>
+        <hr class="my-4">
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
 </div>

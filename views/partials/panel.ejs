@@ -1,20 +1,20 @@
 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-    <% if(classification!=="strangers") {%>
-    <a class="nav-link<% if(pageToRender == "home") { %> active<% } %>" href="/<%=classification%>">Home</a>
+    <% if(currentUser.classification!=="strangers") {%>
+    <a class="nav-link<% if(pageToRender == "home") { %> active<% } %>" href="/<%=currentUser.classification%>">Home</a>
     <% } else {%>
     <a class="nav-link<% if(pageToRender == "home") { %> active<% } %>" href="/">Home</a>
     <% } %>
 
-    <% if(classification==="strangers") {%>
-    <a class="nav-link<% if(pageToRender == "login") { %> active<% } %>" href="/sessions/login">Log In</a>
-    <a class="nav-link<% if(pageToRender == "register") { %> active<% } %>" href="/sessions/register">Sign Up</a>
+    <% if(currentUser.classification==="strangers") {%>
+    <a class="nav-link<% if(pageToRender == "login") { %> active<% } %>" href="/login">Log In</a>
+    <a class="nav-link<% if(pageToRender == "register") { %> active<% } %>" href="/register">Sign Up</a>
     <% } %>
     
-    <% if(classification!=="strangers") {%>
-    <a class="nav-link<% if(pageToRender == "group") { %> active<% } %>" href="/<%=classification%>/group">My Groups</a>
+    <% if(currentUser.classification!=="strangers") {%>
+    <a class="nav-link<% if(pageToRender == "group") { %> active<% } %>" href="/<%=currentUser.classification%>/group">My Groups</a>
     <% } %>
 
-    <% if(classification==="teachers") {%>
+    <% if(currentUser.classification==="teachers") {%>
     <a class="nav-link<% if(pageToRender == "exam") { %> active<% } %>" href="/teachers/exam">My Exams</a>
     <a class="nav-link<% if(pageToRender == "question") { %> active<% } %>" href="/teachers/question">My Questions</a>
     <% } %>
