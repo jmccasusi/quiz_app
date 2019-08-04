@@ -38,7 +38,7 @@ sessions.post('/login', (req, res) => {
                 req.session.currentUser = foundUser;
                 res.redirect('/');
             } else {
-                res.redirect('./new');
+                res.redirect('/login');
             }
         }
 	});
@@ -63,7 +63,7 @@ sessions.post('/register', (req, res) => {
 	
 });
 
-sessions.delete('/', (req, res) => {
+sessions.delete('/logout', (req, res) => {
 	req.session.destroy(() => {
 		res.redirect('/');
 	});

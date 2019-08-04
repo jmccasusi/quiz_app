@@ -41,7 +41,7 @@ app.use('/teachers', teachersController);
 // Routes
 app.get('/' , (req, res) => {
     if(req.session.currentUser){
-        if(req.session.currentUser.classification==="student"){
+        if(req.session.currentUser.classification==="students"){
             res.redirect('/students');
         } else {
             res.redirect('/teachers');
