@@ -13,8 +13,9 @@ const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/QUIZAPPDB'
 
 // Connect to Mongo
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true }, () => {
-	console.log('connected to mongo database')
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connection.once('open', () => {
+    console.log('connected to mongo');
 });
 
 // Middelwares

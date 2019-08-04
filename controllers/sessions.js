@@ -30,7 +30,7 @@ sessions.get('/register', (req, res) => {
 sessions.post('/login', (req, res) => {
     console.log('Im here');
     console.log(req.body);
-	userModel.User.findOne({ name: req.body.name }, (err, foundUser) => {
+	userModel.User.findOne({ email: req.body.email }, (err, foundUser) => {
         if(err){
             console.log(err);
         } else {
