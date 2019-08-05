@@ -8,7 +8,8 @@ const groupSchema = new Schema({
     name: {type: String, required: true, unique: true},
     join_key: {type: String, required: true, unique: true},
     owner_id: {type: String, required: true},
-    exams_ids: Array
+    exams_ids: Array,
+    members_ids: Array
 });
 
 const Group = mongoose.model('Group', groupSchema);

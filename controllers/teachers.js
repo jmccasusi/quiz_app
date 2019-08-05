@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const teachers = express.Router();
 
 const userModel = require('../models/users.js');
-const groupModel = require('../models/groups.js')
+const groupModel = require('../models/groups.js');
 
 // ROUTES
 teachers.get('/', (req, res) => {

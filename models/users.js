@@ -9,7 +9,6 @@ const userSchema = new Schema({
     email: {type: String, required: true, unique: true},
     classification: {type: String, required: true},
     password: {type: String, required: true},
-    groups_ids: Array,
     grades_objects: Array
 });
 
