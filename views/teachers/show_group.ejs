@@ -8,6 +8,15 @@
                 </div>
             </div>
             <hr class="my-4">
+            <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <h5>Members List:</h5>
+                            <% groupMembers.forEach((groupMember) => { %>
+                                <li><%= groupMember.firstName %> <%= groupMember.lastName %></li>
+                            <% }) %>
+                    </div>
+            </div>
+            <hr class="my-4">
             <button type="submit" class="btn btn-primary">Delete Group</button>
         </form>
 </div>

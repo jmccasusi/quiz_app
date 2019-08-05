@@ -28,12 +28,6 @@ teachers.get('/question', (req, res) => {
 	});
 });
 
-teachers.get('/new', (req, res) => {
-    res.render('./teachers/new.ejs', {
-        currentUser: req.session.currentUser
-      });
-});
-
 // Group Routes
 teachers.get('/group/new', (req, res) => {
 	// function for generating random key
@@ -75,10 +69,13 @@ teachers.get('/group/new', (req, res) => {
 
 teachers.get('/group/:id', (req, res) => {
 	groupModel.Group.findById(req.params.id, (err, foundGroup) => {
-		res.render('index.ejs', {
-			currentUser: req.session.currentUser,
-			pageToRender: "show_group",
-			currentGroup: foundGroup
+		userModel.User.find({_id: {$in: foundGroup.members_ids}}, (err, foundMembers) => {
+			res.render('index.ejs', {
+				currentUser: req.session.currentUser,
+				pageToRender: "show_group",
+				currentGroup: foundGroup,
+				groupMembers: foundMembers
+			})
 		})
 	})
 });

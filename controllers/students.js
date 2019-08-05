@@ -14,12 +14,6 @@ students.get('/', (req, res) => {
 	});
 });
 
-students.get('/new', (req, res) => {
-    res.render('./students/new.ejs', {
-        currentUser: req.session.currentUser
-      });
-})
-
 // GROUPS ROUTES
 students.get('/group/join', (req, res) => {
 	res.render('index.ejs', {
