@@ -13,6 +13,13 @@ students.get('/', (req, res) => {
 	});
 });
 
+students.get('/group/join', (req, res) => {
+	res.render('index.ejs', {
+		currentUser: req.session.currentUser,
+		pageToRender: "join_group"
+	});
+});
+
 students.get('/group', (req, res) => {
 	res.render('index.ejs', {
 		currentUser: req.session.currentUser,

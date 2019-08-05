@@ -34,11 +34,23 @@ sessions.post('/login', (req, res) => {
         if(err){
             console.log(err);
         } else {
-            if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-                req.session.currentUser = foundUser;
-                res.redirect('/');
+            if(foundUser){
+                if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+                    req.session.currentUser = foundUser;
+                    res.redirect('/');
+                } else {
+                    res.render('index.ejs', {
+                        currentUser: {classification: "strangers"},
+                        pageToRender: "login",
+                        errMessage: "Wrong email-address/password entered."
+                    })
+                }
             } else {
-                res.redirect('/login');
+                res.render('index.ejs', {
+                    currentUser: {classification: "strangers"},
+                    pageToRender: "login",
+                    errMessage: "Wrong email-address/password entered."
+                })
             }
         }
 	});
@@ -52,12 +64,24 @@ sessions.post('/register', (req, res) => {
             bcrypt.genSaltSync(10)
         );
         userModel.User.create(req.body, (err, createdUser) => {
-            req.session.currentUser = createdUser;
-            console.log(createdUser);
-            res.redirect('/');
+            if(err){
+                res.render('index.ejs', {
+                    currentUser: {classification: "strangers"},
+                    pageToRender: "register",
+                    errMessage: "Email address has already been used by another account."
+                })
+            } else {
+                req.session.currentUser = createdUser;
+                console.log(createdUser);
+                res.redirect('/');     
+            }
         });
     } else {
-        res.redirect('/register');
+        res.render('index.ejs', {
+            currentUser: {classification: "strangers"},
+            pageToRender: "register",
+            errMessage: "Passwords do not match."
+        })
     }
 
 	

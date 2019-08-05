@@ -11,7 +11,7 @@
     <% } %>
     
     <% if(currentUser.classification!=="strangers") {%>
-    <a class="nav-link<% if(pageToRender == "group") { %> active<% } %>" href="/<%=currentUser.classification%>/group">My Groups</a>
+    <a class="nav-link<% if(pageToRender == "group" || pageToRender == "new_group" || pageToRender == "join_group" || pageToRender == "show_group") { %> active<% } %>" href="/<%=currentUser.classification%>/group">My Groups</a>
     <% } %>
 
     <% if(currentUser.classification==="teachers") {%>

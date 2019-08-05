@@ -11,9 +11,14 @@
         </div>
         <div class="row">
             <div class="col-lg-3">
+                    <hr class="my-6">
                 <% include ./partials/panel.ejs %>
             </div>
             <div class="col-sm-12 col-lg-9">
+             <hr class="my-6">
+                <% if (!(typeof errMessage == 'undefined')) { %>
+                    <% include ./partials/alert.ejs %>
+                <% } %>
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="content" role="tabpanel" aria-labelledby="content-tab">
                             <%- include('./'+currentUser.classification+'/'+pageToRender+'.ejs') %>

@@ -36,8 +36,20 @@ const studentsController = require('./controllers/students.js');
 const teachersController = require('./controllers/teachers.js');
 const sessionsController = require('./controllers/sessions.js');
 app.use(sessionsController);
-app.use('/students', studentsController);
-app.use('/teachers', teachersController);
+app.use('/students', (req, res) => {
+    if(!req.session.currentUser || req.session.currentUser.classification!=="students") {
+        res.redirect('/');
+    } else {
+        studentsController(req, res);
+    }
+});
+app.use('/teachers', (req, res) => {
+    if(!req.session.currentUser || req.session.currentUser.classification!=="teachers") {
+        res.redirect('/');
+    } else {
+        teachersController(req, res);
+    }
+});
 
 // Routes
 app.get('/' , (req, res) => {
