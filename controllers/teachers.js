@@ -89,6 +89,16 @@ teachers.put('/group/addExam/:id', (req, res) => {
 	});
 });
 
+teachers.put('/group/:groupId/removeExam/:examId', (req, res) => {
+	groupModel.Group.findByIdAndUpdate(req.params.groupId, {"$pull": { "exams_ids": req.params.examId }}, { new: true }, (err, updatedGroup) => {
+		if(err){
+			console.log(err);
+		} else {
+			res.redirect(`/teachers/group/${req.params.groupId}`);     
+		}
+	})
+});
+
 teachers.delete('/exam/delete/:id', (req, res) => {
 	examModel.Exam.findByIdAndRemove(req.params.id, (err, deletedGroup) => {
 		if (err) {
