@@ -1,0 +1,36 @@
+<div class="jumbotron">
+        <h1 class="display-4"><%= currentExam.title %></h1>
+        <hr class="my-4">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                        <h5><%= currentExam.description %></h5>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <h5>Questions in this Exam:</h5>
+                            <% if (examQuestions.length === 0) { %>
+                                <li>This exam currently has no questions included.</li>
+                            <% } else { %>
+                            <% examQuestions.forEach((examQuestion, index) => { %>
+                                <li><%= index %></li>
+                            <% })} %>
+                    </div>
+            </div>
+            <button type="button" class="btn btn-primary">Edit Question List</button>
+            <hr class="my-4">
+        <form action="/teachers/group/addExam/<%=currentExam._id%>?_method=PUT" method="POST">
+            <h6>Send this Exam to:
+            <select name="targetGroupId" id="targetGroupId">
+                <% ownedGroups.forEach((ownedGroup) => { %>
+                <option value="<%=ownedGroup._id%>"><%=ownedGroup.name%></option>
+                <% }) %>
+            </select></h6>
+            <input type="submit" class="btn btn-primary" value="Send"></input>
+        </form>
+            <hr class="my-4">
+        <form action="/teachers/exam/delete/<%=currentExam._id%>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-primary">Delete Exam</button>
+        </form>
+</div>

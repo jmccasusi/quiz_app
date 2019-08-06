@@ -5,6 +5,8 @@ const teachers = express.Router();
 
 const userModel = require('../models/users.js');
 const groupModel = require('../models/groups.js');
+const examModel = require('../models/exams.js');
+const questionModel = require('../models/questions.js')
 
 // ROUTES
 teachers.get('/', (req, res) => {
@@ -14,12 +16,6 @@ teachers.get('/', (req, res) => {
 	});
 });
 
-teachers.get('/exam', (req, res) => {
-	res.render('index.ejs', {
-		currentUser: req.session.currentUser,
-		pageToRender: "exam"
-	});
-});
 
 teachers.get('/question', (req, res) => {
 	res.render('index.ejs', {
@@ -28,60 +24,116 @@ teachers.get('/question', (req, res) => {
 	});
 });
 
-// Group Routes
-teachers.get('/group/new', (req, res) => {
-	// function for generating random key
-	const makeid = (length) => {
-		let result = '';
-		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		for ( var i = 0; i < length; i++ ) {
-		   result += characters.charAt(Math.floor(Math.random() * characters.length));
-		}
-		return result;
-	 }
-
-	let newKey = makeid(8);
-	let keySameCount = 0;
-	let isUnique = false;
-	
-	groupModel.Group.find({}, (err, foundGroups) => {
-		while(!isUnique){
-			foundGroups.forEach((foundGroup) => {
-				if(foundGroup.join_key === newKey){
-					keySameCount++;
-				}
-			})
-			if(keySameCount === 0){
-				isUnique = true;
-			} else {
-				keySameCount = 0;
-				isUnique = false;
-			}
-		}
-	})
-
+// Exam Routes
+teachers.get('/exam/new', (req, res) => {
 	res.render('index.ejs', {
 		currentUser: req.session.currentUser,
-		generatedKey: newKey,
+		pageToRender: "new_exam"
+	});
+});
+
+teachers.get('/exam/:id', (req, res) => {
+	examModel.Exam.findById(req.params.id, (err, foundExam) => {
+		questionModel.Question.find({
+			_id: {
+				$in: foundExam.questions_ids
+			}
+		}, (err, foundQuestions) => {
+			groupModel.Group.find({
+				owner_id: req.session.currentUser._id
+			}, (err, foundGroups) => {
+				res.render('index.ejs', {
+					currentUser: req.session.currentUser,
+					pageToRender: "show_exam",
+					currentExam: foundExam,
+					ownedGroups: foundGroups,
+					examQuestions: foundQuestions
+				})
+			})
+		})
+	})
+});
+
+teachers.get('/exam', (req, res) => {
+	examModel.Exam.find({
+		owner_id: req.session.currentUser._id
+	}, (err, foundExams) => {
+		console.log(foundExams);
+		res.render('index.ejs', {
+			currentUser: req.session.currentUser,
+			ownedExams: foundExams,
+			pageToRender: "exam"
+		});
+	})
+});
+
+teachers.post('/exam/new', (req, res) => {
+	req.body.owner_id = req.session.currentUser._id;
+	examModel.Exam.create(req.body, (err, createdExam) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(createdExam);
+			res.redirect(`${createdExam._id}`);
+		}
+	});
+});
+
+teachers.put('/group/addExam/:id', (req, res) => {
+	groupModel.Group.findByIdAndUpdate(req.body.targetGroupId, {$addToSet:{exams_ids: req.params.id}}, { new: true }, (err, foundGroup) => {
+		if(err){
+			console.log(err);
+		} else if (foundGroup) {
+			res.redirect(`/teachers/exam/${req.params.id}`); 
+		}
+	});
+});
+
+teachers.delete('/exam/delete/:id', (req, res) => {
+	examModel.Exam.findByIdAndRemove(req.params.id, (err, deletedGroup) => {
+		if (err) {
+			console.log(err)
+		} else {
+			res.redirect('/teachers/exam');
+		}
+	});
+})
+
+// Group Routes
+teachers.get('/group/new', (req, res) => {
+	res.render('index.ejs', {
+		currentUser: req.session.currentUser,
 		pageToRender: "new_group"
 	});
 });
 
 teachers.get('/group/:id', (req, res) => {
 	groupModel.Group.findById(req.params.id, (err, foundGroup) => {
-		userModel.User.find({_id: {$in: foundGroup.members_ids}}, (err, foundMembers) => {
+		userModel.User.find({
+			_id: {
+				$in: foundGroup.members_ids
+			}
+		}, (err, foundMembers) => {
+			examModel.Exam.find({_id: {
+				$in: foundGroup.exams_ids
+			}
+		}, (err, foundExams) => {
 			res.render('index.ejs', {
 				currentUser: req.session.currentUser,
 				pageToRender: "show_group",
 				currentGroup: foundGroup,
+				groupExams: foundExams,
 				groupMembers: foundMembers
 			})
+		})
 		})
 	})
 });
 
 teachers.get('/group', (req, res) => {
-	groupModel.Group.find({owner_id: req.session.currentUser._id}, (err, foundGroups) => {
+	groupModel.Group.find({
+		owner_id: req.session.currentUser._id
+	}, (err, foundGroups) => {
 		console.log(foundGroups);
 		res.render('index.ejs', {
 			currentUser: req.session.currentUser,
@@ -92,25 +144,57 @@ teachers.get('/group', (req, res) => {
 });
 
 teachers.post('/group/new', (req, res) => {
+	// function for generating random key
+	const makeid = (length) => {
+		let result = '';
+		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		for (var i = 0; i < length; i++) {
+			result += characters.charAt(Math.floor(Math.random() * characters.length));
+		}
+		return result;
+	}
+
+	let newKey = makeid(8);
+	let keySameCount = 0;
+	let isUnique = false;
+
+	groupModel.Group.find({}, (err, foundGroups) => {
+		while (!isUnique) {
+			foundGroups.forEach((foundGroup) => {
+				if (foundGroup.join_key === newKey) {
+					keySameCount++;
+				}
+			})
+			if (keySameCount === 0) {
+				isUnique = true;
+			} else {
+				keySameCount = 0;
+				isUnique = false;
+			}
+		}
+	})
+	///////////////////////
+
 	req.body.owner_id = req.session.currentUser._id;
+	req.body.join_key = newKey;
 	groupModel.Group.create(req.body, (err, createdGroup) => {
-		if(err){
+		if (err) {
 			console.log(err);
 		} else {
 			console.log(createdGroup);
-			res.redirect(`${createdGroup._id}`);     
+			res.redirect(`${createdGroup._id}`);
 		}
 	});
 });
 
 teachers.delete('/group/delete/:id', (req, res) => {
 	groupModel.Group.findByIdAndRemove(req.params.id, (err, deletedGroup) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.redirect('/teachers/group');
-        }
-    });
+		if (err) {
+			console.log(err)
+		} else {
+			res.redirect('/teachers/group');
+		}
+	});
 })
 
 // EXPORT

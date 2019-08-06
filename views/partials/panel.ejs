@@ -15,7 +15,7 @@
     <% } %>
 
     <% if(currentUser.classification==="teachers") {%>
-    <a class="nav-link<% if(pageToRender == "exam") { %> active<% } %>" href="/teachers/exam">My Exams</a>
+    <a class="nav-link<% if(pageToRender == "exam" || pageToRender == "new_exam" || pageToRender == "show_exam") { %> active<% } %>" href="/teachers/exam">My Exams</a>
     <a class="nav-link<% if(pageToRender == "question") { %> active<% } %>" href="/teachers/question">My Questions</a>
     <% } %>
 </div>

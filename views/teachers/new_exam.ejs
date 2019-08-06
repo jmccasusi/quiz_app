@@ -1,0 +1,21 @@
+<div class="jumbotron">
+        <h1 class="display-4">Create a New Exam</h1>
+        <hr class="my-4">
+        <form action="/teachers/exam/new" method="POST">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="name">Exam Title</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
+                </div>
+            </div>
+            <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="name">Description</label>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="Included topics, type of questions, etc.." required>
+                    </div>
+                </div>
+            <hr class="my-4">
+    
+            <button type="submit" class="btn btn-primary">Add New Exam</button>
+        </form>
+</div>
