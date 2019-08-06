@@ -14,7 +14,7 @@
                                 <li>This exam currently has no questions included.</li>
                             <% } else { %>
                             <% examQuestions.forEach((examQuestion, index) => { %>
-                                <li><%= index %></li>
+                                <li><%= examQuestion.content %></li>
                             <% })} %>
                     </div>
             </div>

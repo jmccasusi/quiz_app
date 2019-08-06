@@ -10,21 +10,29 @@
             <div class="form-row">
                     <div class="form-group col-md-12">
                         <h5>Exam List:</h5>
+                            <% if(groupExams.length === 0) { %>
+                                <li>This group does not have any exams.</li>
+                            <% } else { %>
+
                             <% groupExams.forEach((groupExam) => { %>
                                 <li><%= groupExam.title %>
                                         <form action="/teachers/group/<%=currentGroup._id%>/removeExam/<%=groupExam._id%>?_method=PUT" method="POST">
                                             <input type="submit" value="Remove">
                                         </form>
                                 </li>
-                            <% }) %>
+                            <% })} %>
                     </div>
             </div><hr class="my-4">
             <div class="form-row">
                     <div class="form-group col-md-12">
                         <h5>Members List:</h5>
+                        <% if(groupMembers.length === 0) { %>
+                            <li>This group does not have any members yet.</li>
+                        <% } else { %>
+
                             <% groupMembers.forEach((groupMember) => { %>
                                 <li><%= groupMember.firstName %> <%= groupMember.lastName %></li>
-                            <% }) %>
+                            <% })} %>
                     </div>
             </div>
             <hr class="my-4">

@@ -64,6 +64,26 @@ teachers.post('/question/new', (req, res) => {
 	});
 });
 
+teachers.put('/exam/addQuestion/:id', (req, res) => {
+	examModel.Exam.findByIdAndUpdate(req.body.targetExamId, {$addToSet:{questions_ids: req.params.id}}, { new: true }, (err, foundExam) => {
+		if(err){
+			console.log(err);
+		} else if (foundExam) {
+			res.redirect(`/teachers/question/${req.params.id}`); 
+		}
+	});
+});
+
+teachers.delete('/question/delete/:id', (req, res) => {
+	questionModel.Question.findByIdAndRemove(req.params.id, (err, deletedQuestion) => {
+		if (err) {
+			console.log(err)
+		} else {
+			res.redirect('/teachers/question');
+		}
+	});
+})
+
 // Exam Routes
 teachers.get('/exam/new', (req, res) => {
 	res.render('index.ejs', {
