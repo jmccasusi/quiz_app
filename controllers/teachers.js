@@ -108,7 +108,6 @@ teachers.delete('/group/delete/:id', (req, res) => {
         if (err) {
             console.log(err)
         } else {
-            //redirect back to fruits index
             res.redirect('/teachers/group');
         }
     });

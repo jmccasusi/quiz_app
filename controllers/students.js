@@ -50,11 +50,27 @@ students.post('/group/join', (req, res) => {
 	groupModel.Group.findOneAndUpdate({join_key: req.body.join_key}, {$addToSet:{members_ids: req.session.currentUser._id}}, { new: true }, (err, foundGroup) => {
 		if(err){
 			console.log(err);
-		} else {
+		} else if (foundGroup) {
 			console.log(foundGroup);
-			res.redirect(`${foundGroup._id}`);     
+			res.redirect(`${foundGroup._id}`); 
+		} else {
+			res.render('index.ejs', {
+				currentUser: req.session.currentUser,
+				pageToRender: "join_group",
+				errMessage: "The join key that you entered does not match with any existing groups. Please try again."
+			});
 		}
 	});
+});
+
+students.put('/group/leave/:id', (req, res) => {
+	groupModel.Group.findByIdAndUpdate(req.params.id, {"$pull": { "members_ids": req.session.currentUser._id }}, { new: true }, (err, updatedGroup) => {
+		if(err){
+			console.log(err);
+		} else {
+			res.redirect('/students/group');     
+		}
+	})
 });
 
 // EXPORT
