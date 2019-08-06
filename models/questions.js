@@ -4,11 +4,8 @@ const Schema = mongoose.Schema;
 const questionSchema = new Schema({
     owner_id: {type: String, required: true},
     content: {type: String, required: true},
-    type: {type: String, required: true},
-    category: {type: String, required: true},
     options: Array,
-    answers: Array,
-    tags: Array
+    correctAnswer: {type: String, required: true}
 });
 
 const Question = mongoose.model('Question', questionSchema);

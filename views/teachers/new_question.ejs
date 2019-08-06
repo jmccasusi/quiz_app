@@ -1,0 +1,27 @@
+<div class="jumbotron">
+    <h1 class="display-4">Create a New Question</h1>
+    <hr class="my-4">
+    <form action="/teachers/question/new" method="POST">
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="content">Question Content</label>
+            <input type="text" class="form-control" id="content" name="content" placeholder="Question" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="name">Options for Answers</label>
+            <div id="answerOptionList">
+                <li>
+                    <input type="text" placeholder="Option" name="options">&nbsp;
+                    <input type="radio" name="correctAnswerIndex" value="0">&nbsp;&nbsp;Correct Answer
+                </li>
+            </div>
+            <br>
+                <button id="add-option-btn" type="button" class="btn btn-primary">Add another option</button>
+        </div>
+    </div>
+    <hr class="my-4">
+        <button type="submit" class="btn btn-primary">Create Question</button>
+    </form>
+</div>

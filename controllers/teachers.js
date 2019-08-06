@@ -15,12 +15,52 @@ teachers.get('/', (req, res) => {
 		pageToRender: "home"
 	});
 });
-
-
-teachers.get('/question', (req, res) => {
+// Question Routes
+teachers.get('/question/new', (req, res) => {
 	res.render('index.ejs', {
 		currentUser: req.session.currentUser,
-		pageToRender: "question"
+		pageToRender: "new_question"
+	});
+});
+
+teachers.get('/question/:id', (req, res) => {
+	questionModel.Question.findById(req.params.id, (err, foundQuestion) => {
+		examModel.Exam.find({
+			owner_id: req.session.currentUser._id
+		}, (err, foundExams) => {
+				res.render('index.ejs', {
+					currentUser: req.session.currentUser,
+					pageToRender: "show_question",
+					ownedExams: foundExams,
+					currentQuestion: foundQuestion
+				})
+		})
+	})
+});
+
+teachers.get('/question', (req, res) => {
+	questionModel.Question.find({
+		owner_id: req.session.currentUser._id
+	}, (err, foundQuestions) => {
+		console.log(foundQuestions);
+		res.render('index.ejs', {
+			currentUser: req.session.currentUser,
+			ownedQuestions: foundQuestions,
+			pageToRender: "question"
+		});
+	})
+});
+
+teachers.post('/question/new', (req, res) => {
+	req.body.owner_id = req.session.currentUser._id;
+	req.body.correctAnswer = req.body.options[req.body.correctAnswerIndex];
+	questionModel.Question.create(req.body, (err, createdQuestion) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(createdQuestion);
+			res.redirect(`${createdQuestion._id}`);
+		}
 	});
 });
 

@@ -1,0 +1,37 @@
+<div class="jumbotron">
+        <h1 class="display-4">Viewing Question Details</h1>
+        <hr class="my-4">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                        <h5>Question: <br><br><%= currentQuestion.content %></h5>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <h5>Options:</h5>
+                            <% if (currentQuestion.options.length === 0) { %>
+                                <li>This question has no options.</li>
+                            <% } else { %>
+                            <% currentQuestion.options.forEach((option, index) => { %>
+                                <li><%= option %>
+                                <% if(option === currentQuestion.correctAnswer) { %> -> Correct Answer <% } %>
+                                </li>
+                            <% })} %>
+                    </div>
+            </div>
+            <hr class="my-4">
+        <form action="/teachers/exam/addQuestion/<%=currentQuestion._id%>?_method=PUT" method="POST">
+            <h6>Add this Question to:
+            <select name="targetExamId" id="targetExamId">
+                    <% ownedExams.forEach((ownedExam) => { %>
+                        <option value="<%=ownedExam._id%>"><%=ownedExam.title%></option>
+                        <% }) %>
+            </select></h6>
+            <input type="submit" class="btn btn-primary" value="Send"></input>
+        </form>
+            <hr class="my-4">
+        <form action="/teachers/question/delete/<%=currentQuestion._id%>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-primary">Delete Question</button>
+        </form>
+</div>

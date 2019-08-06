@@ -1,9 +1,13 @@
 <div class="jumbotron">
-        <h1 class="display-4">My Questions! Teacher</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
-            attention to featured content or information.</p>
+        <h1 class="display-4">Question Bank</h1>
         <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger
-            container.</p>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-</div>
+        <% if(ownedQuestions.length === 0) { %>
+        <p>You currently don't have any created questions.</p>
+        <% } else { %>
+                <% ownedQuestions.forEach((ownedQuestion) => { %>
+                        <a href="question/<%=ownedQuestion._id%>"><li><%=ownedQuestion.content%></li></a>
+                <% }) %>
+        <% } %>
+        <hr class="my-4">
+        <a class="btn btn-primary btn-lg" href="question/new" role="button">Create New Question</a>
+</div> 
