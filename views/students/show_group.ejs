@@ -1,18 +1,41 @@
 <div class="jumbotron">
         <h1 class="display-4"><%= currentGroup.name %></h1>
         <hr class="my-4">
-        <form action="/students/group/leave/<%=currentGroup._id%>?_method=PUT" method="POST">
-            <div class="form-row">
-                    <div class="form-group col-md-6">
-                            <h5>Owned By: <%=ownerName%></h5>
-                    </div>
-                </div>
-            <div class="form-row">
+        <div class="form-row">
                 <div class="form-group col-md-6">
-                        <h5>Hello!</h5>
+                        <h5>Owned By: <%=ownerName%></h5>
                 </div>
-            </div>
-            <hr class="my-4">
-            <button type="submit" class="btn btn-primary">Leave Group</button>
+        </div>
+        <hr class="my-4">
+        <div class="form-row">
+                <div class="form-group col-md-12">
+                        <% if(groupExams.length === 0) { %>
+                                <li>This group does not have any exams.</li>
+                        <% } else { %>
+                        <table class="table table-bordered table-striped">
+                                <thead class="thead-dark">
+                                        <tr>
+                                                <th scope="col">Exam #</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Grade</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <% groupExams.forEach((groupExam, index) => { %>
+                                        <tr>
+                                                <th scope="row"><%=(index+1)%></th>
+                                                <td><%=groupExam.title%></td>
+                                                <td><a href="/students/take/<%=currentGroup._id%>/<%=groupExam._id%>">Take now</a></td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                        </table>
+                        <% } %>
+                </div>
+        </div>
+        <hr class="my-4">
+
+        <form action="/students/group/leave/<%=currentGroup._id%>?_method=PUT" method="POST">
+                <button type="submit" class="btn btn-primary">Leave Group</button>
         </form>
 </div>

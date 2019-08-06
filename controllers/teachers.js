@@ -69,7 +69,7 @@ teachers.put('/exam/addQuestion/:id', (req, res) => {
 		if(err){
 			console.log(err);
 		} else if (foundExam) {
-			res.redirect(`/teachers/question/${req.params.id}`); 
+			res.redirect(`/teachers/question`); 
 		}
 	});
 });
