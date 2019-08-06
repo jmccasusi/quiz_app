@@ -103,5 +103,16 @@ teachers.post('/group/new', (req, res) => {
 	});
 });
 
+teachers.delete('/group/delete/:id', (req, res) => {
+	groupModel.Group.findByIdAndRemove(req.params.id, (err, deletedGroup) => {
+        if (err) {
+            console.log(err)
+        } else {
+            //redirect back to fruits index
+            res.redirect('/teachers/group');
+        }
+    });
+})
+
 // EXPORT
 module.exports = teachers;
