@@ -1,15 +1,20 @@
 <% examQuestions.forEach((examQuestion, index) => { %>
-<div id="<%=examQuestion._id%>" class="jumbotron q-card">
+<div id="<%=examQuestion._id%>" class="jumbotron q-card q-card-<%= (index+1) %>">
         <h1 class="display-5">Question #<%= index+1 %></h1>
         <p class="lead"><%= examQuestion.content %></p>
         <hr class="my-4">
             <% examQuestion.options = shuffle(examQuestion.options) %>
             <% examQuestion.options.forEach((option, index) => { %>
-                <p><input type="radio">
+                <p><input type="radio" name="<%= examQuestion._id %>" value="<%= option %>">
                     &nbsp;&nbsp;<%= option %></p>
             <% }) %>
         <hr class="my-4">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Previous Question</a>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Next Question</a>
+        <% if(index !== 0) { %>
+        <span class="btn btn-primary btn-lg q-prev-btn" href="#" role="button" prev="<%= (index) %>">Previous Question</span>
+        <% } %>
+
+        <% if(index !== examQuestions.length-1) { %>
+        <span class="btn btn-primary btn-lg q-next-btn" href="#" role="button" next="<%= (index+2) %>">Next Question</span>
+        <% } %>
     </div>
 <% }) %>

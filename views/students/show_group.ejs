@@ -22,10 +22,22 @@
                                 </thead>
                                 <tbody>
                                         <% groupExams.forEach((groupExam, index) => { %>
+                                                <% let taken = false; %>
                                         <tr>
                                                 <th scope="row"><%=(index+1)%></th>
                                                 <td><%=groupExam.title%></td>
-                                                <td><a href="/students/take/<%=currentGroup._id%>/<%=groupExam._id%>">Take now</a></td>
+                                                <td>
+                                                        <% currentUser.grades_objects.forEach((gradeObject, index) => { %>
+                                                                <% if(gradeObject.groupId == currentGroup._id && gradeObject.examId == groupExam._id) { %>
+                                                                        <% taken = true; %>
+                                                                        <span>Score: <%=gradeObject.score%></span>
+                                                                <% } %>
+                                                        <% }) %>
+                                                        <% if(!taken) { %>
+                                                                <a href="/students/take/<%=currentGroup._id%>/<%=groupExam._id%>">Take now</a>
+                                                        <% } %>
+                                                
+                                                </td>
                                         </tr>
                                         <% }) %>
                                 </tbody>

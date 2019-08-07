@@ -24,21 +24,52 @@ students.get('/take/:groupId/:examId' , (req, res) => {
 				$in: foundExam.questions_ids
 			}
 		}, (err, foundQuestions) => {
-			const shuffleFunction = (array) => {
-				for (let i = array.length - 1; i > 0; i--) {
-					const j = Math.floor(Math.random() * (i + 1));
-					[array[i], array[j]] = [array[j], array[i]];
-				}
-				return array;
-			  }
-			res.render('index.ejs', {
-				currentUser: req.session.currentUser,
-				pageToRender: "take_exam",
-				currentExam: foundExam,
-				examQuestions: shuffleFunction(foundQuestions),
-				shuffle: shuffleFunction,
-				takingExam: true
+			groupModel.Group.findById(req.params.groupId, (err, foundGroup) => {
+				const shuffleFunction = (array) => {
+					for (let i = array.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+						[array[i], array[j]] = [array[j], array[i]];
+					}
+					return array;
+				  }
+				res.render('index.ejs', {
+					currentUser: req.session.currentUser,
+					pageToRender: "take_exam",
+					currentGroup: foundGroup,
+					currentExam: foundExam,
+					examQuestions: shuffleFunction(foundQuestions),
+					shuffle: shuffleFunction,
+					takingExam: true
+				})
 			})
+		})
+	})
+})
+
+students.put('/submit/:groupId/:examId', (req, res) => {
+	let correctAnswer = 0;
+	questionModel.Question.find({}, (err, foundQuestions) => {
+		console.log(foundQuestions)
+		for(let questionId in req.body) {
+			foundQuestions.forEach((foundQuestion) => {
+				if(foundQuestion._id == questionId){
+					console.log(foundQuestion.correctAnswer + ' vs. ' + req.body[questionId]);
+					if(foundQuestion.correctAnswer === req.body[questionId]){
+						correctAnswer++;
+						console.log('Correct! +1');
+					}
+				}
+			})
+		}
+		const gradeObject = {
+			groupId: req.params.groupId,
+			examId: req.params.examId,
+			score: correctAnswer
+		}
+		userModel.User.findByIdAndUpdate(req.session.currentUser._id, { $push: {grades_objects: gradeObject} }, {new: true}, (err, foundUser) => {
+			console.log(foundUser);
+			req.session.currentUser = foundUser;
+			res.redirect(`/students/group/${req.params.groupId}`);
 		})
 	})
 })

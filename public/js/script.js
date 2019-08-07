@@ -13,4 +13,18 @@ $(() => {
         $('.q-card').hide();
         $(`#${$(event.currentTarget).attr('data')}`).show();
     })
+
+    $('.q-next-btn').on('click', (event) => {
+        $('.q-link').removeClass('q-link-selected');
+        $(`.q-link-${$(event.currentTarget).attr('next')}`).addClass('q-link-selected');
+        $('.q-card').hide();
+        $(`.q-card-${$(event.currentTarget).attr('next')}`).show();
+    })
+
+    $('.q-prev-btn').on('click', (event) => {
+        $('.q-link').removeClass('q-link-selected');
+        $(`.q-link-${$(event.currentTarget).attr('prev')}`).addClass('q-link-selected');
+        $('.q-card').hide();
+        $(`.q-card-${$(event.currentTarget).attr('prev')}`).show();
+    })
 })

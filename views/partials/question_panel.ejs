@@ -5,7 +5,7 @@
     <hr class="my-6">
     <div class="row align-items-center">
         <% examQuestions.forEach((examQuestion, index) => { %>
-            <div class="col-3 col-sm-2 align-items-center my-2 mx-2 card q-link" data="<%=examQuestion._id%>"><%= (index+1) %></div>
+            <div class="col-3 col-sm-2 align-items-center my-2 mx-2 card q-link q-link-<%= (index+1) %>" data="<%=examQuestion._id%>"><%= (index+1) %></div>
         <% }) %>
     </div>
     <hr class="my-6">
