@@ -1,3 +1,12 @@
 * {
     /* border: 1px solid yellow; */
 }
+
+.q-link {
+    color: rgb(47, 125, 246);
+}
+
+.q-link-selected {
+    background-color: rgb(47, 125, 246);
+    color: white;
+}

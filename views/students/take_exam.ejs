@@ -1,9 +1,15 @@
-<div class="jumbotron">
-        <h1 class="display-4">Taking the exam!</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
-            attention to featured content or information.</p>
+<% examQuestions.forEach((examQuestion, index) => { %>
+<div id="<%=examQuestion._id%>" class="jumbotron q-card">
+        <h1 class="display-5">Question #<%= index+1 %></h1>
+        <p class="lead"><%= examQuestion.content %></p>
         <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger
-            container.</p>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-</div>
+            <% examQuestion.options = shuffle(examQuestion.options) %>
+            <% examQuestion.options.forEach((option, index) => { %>
+                <p><input type="radio">
+                    &nbsp;&nbsp;<%= option %></p>
+            <% }) %>
+        <hr class="my-4">
+        <a class="btn btn-primary btn-lg" href="#" role="button">Previous Question</a>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Next Question</a>
+    </div>
+<% }) %>

@@ -2,14 +2,14 @@
     <div class="row align-items-center mx-auto">
         <h4>Question Navigation</h4>
     </div>
+    <hr class="my-6">
     <div class="row align-items-center">
-        <div class="col-3 col-sm-2 my-4"><a href="#">1</a></div>
-        <div class="col-3 col-sm-2 my-4"><a href="#">2</a></div>
-        <div class="col-3 col-sm-2 my-4"><a href="#">3</a></div>
-        <div class="col-3 col-sm-2 my-4"><a href="#">4</a></div>
-        <div class="col-3 col-sm-2 my-4"><a href="#">5</a></div>
-        <div class="col-3 col-sm-2 my-4"><a href="#">6</a></div>
-        <div class="col-3 col-sm-2 my-4"><a href="#">7</a></div>
-        <div class="col-3 col-sm-2 my-4"><a href="#">8</a></div>
+        <% examQuestions.forEach((examQuestion, index) => { %>
+            <div class="col-3 col-sm-2 align-items-center my-2 mx-2 card q-link" data="<%=examQuestion._id%>"><%= (index+1) %></div>
+        <% }) %>
+    </div>
+    <hr class="my-6">
+    <div class="row align-items-center mx-auto">
+            <input class="btn btn-primary btn-lg" type="submit" value="Finish & Submit">
     </div>
 </div>

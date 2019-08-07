@@ -10,10 +10,13 @@
         <div>
             <% include ./partials/nav.ejs %>
         </div>
+        <% if (!(typeof takingExam == 'undefined')) { %>
+            <form action="" method="POST">
+        <% } %>
         <div class="row">
             <div class="col-lg-3">
                 <hr class="my-6">
-                <% if (!(typeof togglePanel == 'undefined')) { %>
+                <% if (!(typeof takingExam == 'undefined')) { %>
                     <% include ./partials/question_panel.ejs %>
                 <% } else { %>
                     <% include ./partials/panel.ejs %>
@@ -31,6 +34,9 @@
                 </div>
             </div>
         </div>
+        <% if (!(typeof takingExam == 'undefined')) { %>
+            </form>
+        <% } %>
     </div>
 </body>
 

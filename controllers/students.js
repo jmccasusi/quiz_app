@@ -6,6 +6,7 @@ const students = express.Router();
 const userModel = require('../models/users.js');
 const groupModel = require('../models/groups.js');
 const examModel = require('../models/exams.js');
+const questionModel = require('../models/questions.js')
 
 // ROUTES
 students.get('/', (req, res) => {
@@ -17,10 +18,28 @@ students.get('/', (req, res) => {
 
 // EXAM Routes
 students.get('/take/:groupId/:examId' , (req, res) => {
-	res.render('index.ejs', {
-		currentUser: req.session.currentUser,
-		pageToRender: "take_exam",
-		togglePanel: true
+	examModel.Exam.findById(req.params.examId, (err, foundExam) => {
+		questionModel.Question.find({
+			_id: {
+				$in: foundExam.questions_ids
+			}
+		}, (err, foundQuestions) => {
+			const shuffleFunction = (array) => {
+				for (let i = array.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[array[i], array[j]] = [array[j], array[i]];
+				}
+				return array;
+			  }
+			res.render('index.ejs', {
+				currentUser: req.session.currentUser,
+				pageToRender: "take_exam",
+				currentExam: foundExam,
+				examQuestions: shuffleFunction(foundQuestions),
+				shuffle: shuffleFunction,
+				takingExam: true
+			})
+		})
 	})
 })
 
