@@ -122,6 +122,20 @@ teachers.post('/question', (req, res) => {
 	})
 });
 
+teachers.put('/question/edit/:id', (req, res) => {
+	console.log(req.body.correctAnswerIndex)
+	req.body.owner_id = req.session.currentUser._id;
+	req.body.correctAnswer = req.body.options[req.body.correctAnswerIndex];
+	questionModel.Question.findByIdAndUpdate(req.params.id, req.body, (err, createdQuestion) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(createdQuestion);
+			res.redirect(`/teachers/question/${createdQuestion._id}`);
+		}
+	});
+});
+
 teachers.put('/exam/addQuestion/:id', (req, res) => {
 	examModel.Exam.findByIdAndUpdate(req.body.targetExamId, {
 		$addToSet: {

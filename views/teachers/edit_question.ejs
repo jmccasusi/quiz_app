@@ -1,7 +1,7 @@
 <div class="jumbotron">
         <h1 class="display-4">Edit Question</h1>
         <hr class="my-4">
-        <form action="/teachers/question/new" method="POST">
+        <form action="/teachers/question/edit/<%=currentQuestion._id%>?_method=PUT" method="POST">
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label for="content">Question Content</label>
@@ -17,7 +17,7 @@
                     <% currentQuestion.options.forEach((option, index) => { %>
                         <li>
                             <input type="text" placeholder="Option" name="options" value="<%=option%>">&nbsp;
-                            <input type="radio" name="correctAnswerIndex" value="0"<% if(option === currentQuestion.correctAnswer) { %> checked="checked" <% } %>>&nbsp;&nbsp;Correct Answer
+                            <input type="radio" name="correctAnswerIndex" value="<%=index%>"<% if(option === currentQuestion.correctAnswer) { %> checked="checked" <% } %>>&nbsp;&nbsp;Correct Answer
                         </li>
                     <% }) %>
                     </div>
