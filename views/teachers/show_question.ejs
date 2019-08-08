@@ -9,7 +9,7 @@
             <hr class="my-4">
             <div class="form-row">
                     <div class="form-group col-md-12">
-                        <h5>Options:</h5>
+                        <h5>Answer Options:</h5>
                             <% if (currentQuestion.options.length === 0) { %>
                                 <li>This question has no options.</li>
                             <% } else { %>
@@ -21,6 +21,7 @@
                     </div>
             </div>
             <hr class="my-4">
+        <% if(ownedExams.length > 0) { %>
         <form action="/teachers/exam/addQuestion/<%=currentQuestion._id%>?_method=PUT" method="POST">
             <h6>Add this Question to:
             <select name="targetExamId" id="targetExamId">
@@ -31,6 +32,7 @@
             <input type="submit" class="btn btn-primary" value="Send"></input>
         </form>
             <hr class="my-4">
+        <% } %>
         <form action="/teachers/question/delete/<%=currentQuestion._id%>?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-primary">Delete Question</button>
         </form>

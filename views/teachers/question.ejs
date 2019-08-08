@@ -1,13 +1,56 @@
 <div class="jumbotron">
         <h1 class="display-4">Question Bank</h1>
         <hr class="my-4">
-        <% if(ownedQuestions.length === 0) { %>
-        <p>You currently don't have any created questions.</p>
-        <% } else { %>
-                <% ownedQuestions.forEach((ownedQuestion) => { %>
-                        <a href="question/<%=ownedQuestion._id%>"><li><%=ownedQuestion.content%></li></a>
-                <% }) %>
+        <form action="/teachers/question" method="POST">
+                <div class="form-row">
+                                <div class="form-group col-md-9">
+                                    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="Search for...">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <input type="submit" class="form-control btn btn-outline-success" value="Search">
+                                </div>
+                            </div>
+                <hr class="my-4">
+        </form>
+        <% if (!(typeof searchResults == 'undefined')) { %>
+        <div class="search-questions-list">
+                <p>Search results:</p>
+                <% if(searchResults.length === 0) { %>
+                <p>No questions matches the search query.</p>
+                <% } else { %>
+                        <table class="table table-bordered table-striped">
+                                        <thead class="thead-dark">
+                                                <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Question</th>
+                                                        <th scope="col">Creator</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                                <% searchResults.forEach((searchResult, index) => { %>        
+                                                <tr>
+                                                        <th scope="row"><%=(index+1)%></th>
+                                                        <td><a href="question/<%=searchResult._id%>"><%=searchResult.content%></a></td>
+                                                        <td><%=searchResult.owner_name%></td>
+                                                </tr>
+                                                <% }) %>
+                                        </tbody>
+                                </table>
+                <% } %>
+        </div>
+        <hr class="my-4">
         <% } %>
+        <div class="owned-questions-list">
+                <% ownedQuestions = ownedQuestions.reverse(); %>
+                <% if(ownedQuestions.length === 0) { %>
+                <p>You currently don't have any created questions.</p>
+                <% } else { %>
+                        <p>Your recently created questions:</p>
+                        <% ownedQuestions.forEach((ownedQuestion) => { %>
+                                <li><a href="question/<%=ownedQuestion._id%>"><%=ownedQuestion.content%></a></li>
+                        <% }) %>
+                <% } %>
+        </div>
         <hr class="my-4">
         <a class="btn btn-primary btn-lg" href="question/new" role="button">Create New Question</a>
 </div> 

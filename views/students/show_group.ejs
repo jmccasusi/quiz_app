@@ -30,7 +30,7 @@
                                                         <% currentUser.grades_objects.forEach((gradeObject, index) => { %>
                                                                 <% if(gradeObject.groupId == currentGroup._id && gradeObject.examId == groupExam._id) { %>
                                                                         <% taken = true; %>
-                                                                        <span>Score: <%=gradeObject.score%></span>
+                                                                        <span>Score: <%=gradeObject.score%>/<%=groupExam.questions_ids.length%></span>
                                                                 <% } %>
                                                         <% }) %>
                                                         <% if(!taken) { %>
