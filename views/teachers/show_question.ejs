@@ -10,14 +10,19 @@
             <div class="form-row">
                     <div class="form-group col-md-12">
                         <h5>Answer Options:</h5>
+                        <ul style="padding:0; list-style-type:none">
                             <% if (currentQuestion.options.length === 0) { %>
                                 <li>This question has no options.</li>
                             <% } else { %>
                             <% currentQuestion.options.forEach((option, index) => { %>
-                                <li><%= option %>
-                                <% if(option === currentQuestion.correctAnswer) { %> -> Correct Answer <% } %>
+                                <li>
+                                <% if(option === currentQuestion.correctAnswer) { %>
+                                    &nbsp;&nbsp;● &nbsp;<strong><u><%= option %></u></strong> ✓ Correct Answer<% } else { %>
+                                    &nbsp;&nbsp;○ &nbsp;<%= option %>
+                                    <% } %>
                                 </li>
                             <% })} %>
+                        </ul>
                     </div>
             </div>
             <hr class="my-4">

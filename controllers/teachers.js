@@ -79,11 +79,18 @@ teachers.post('/question', (req, res) => {
 					ownedQuestionLimit = ownedQuestions.length;
 				}
 				ownedQuestions = ownedQuestions.slice(ownedQuestions.length-ownedQuestionLimit)
+				
 				const searchResultQuestions = [];
 				foundQuestions.forEach((foundQuestion) => {
 					if (foundQuestion.content.toLowerCase().indexOf(req.body.searchKeyword.toLowerCase()) >= 0) {
 						searchResultQuestions.push(foundQuestion);
-					}
+					} else if (foundQuestion.correctAnswer.toLowerCase().indexOf(req.body.searchKeyword.toLowerCase()) >= 0) {
+						searchResultQuestions.push(foundQuestion);
+					} else if (typeof foundQuestion.tags != "undefined") {
+						if (foundQuestion.tags.toLowerCase().indexOf(req.body.searchKeyword.toLowerCase()) >= 0) {
+							searchResultQuestions.push(foundQuestion);
+						}
+					} 
 				})
 
 				searchResultQuestions.forEach((searchResult) => {
