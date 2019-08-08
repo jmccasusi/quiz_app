@@ -1,13 +1,13 @@
 <div class="jumbotron">
         <h1 class="display-4">Viewing Question Details</h1>
         <hr class="my-4">
-            <div class="form-row">
+            <div class="form-row bg-light rounded p-3">
                 <div class="form-group col-md-6">
                         <h5>Question: <br><br><%= currentQuestion.content %></h5>
                 </div>
             </div>
             <hr class="my-4">
-            <div class="form-row">
+            <div class="form-row bg-light rounded p-3">
                     <div class="form-group col-md-12">
                         <h5>Answer Options:</h5>
                         <ul style="padding:0; list-style-type:none">
@@ -26,19 +26,34 @@
                     </div>
             </div>
             <hr class="my-4">
-        <% if(ownedExams.length > 0) { %>
-        <form action="/teachers/exam/addQuestion/<%=currentQuestion._id%>?_method=PUT" method="POST">
-            <h6>Add this Question to:
-            <select name="targetExamId" id="targetExamId">
-                    <% ownedExams.forEach((ownedExam) => { %>
-                        <option value="<%=ownedExam._id%>"><%=ownedExam.title%></option>
-                        <% }) %>
-            </select></h6>
-            <input type="submit" class="btn btn-primary" value="Send"></input>
-        </form>
-            <hr class="my-4">
-        <% } %>
-        <form action="/teachers/question/delete/<%=currentQuestion._id%>?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-primary">Delete Question</button>
-        </form>
+        <div class="d-flex justify-content-around">
+            <% if(ownedExams.length > 0) { %>
+            <form class="form-row" action="/teachers/exam/addQuestion/<%=currentQuestion._id%>?_method=PUT" method="POST">
+                <div class="form-group col-md-12">
+                <h6 class="mx-auto">Add this Question to:</h6>
+                <select name="targetExamId" id="targetExamId">
+                        <% ownedExams.forEach((ownedExam) => { %>
+                            <option value="<%=ownedExam._id%>"><%=ownedExam.title%></option>
+                            <% }) %>
+                </select>
+            </div>
+            <div class="form-group col-md-12">
+                <input type="submit" class="form-control btn btn-outline-primary" value="Send">
+            </div>
+            </form>
+            <% } %>
+        </div>
+        <hr class="my-4">
+        <div class="row d-flex justify-content-around">
+            <% if(currentQuestion.owner_id == currentUser._id) { %>
+            <form action="/teachers/question/edit/<%=currentQuestion._id%>" method="GET">
+                <button type="submit" class="btn btn-success">Edit Question</button>
+            </form>
+            <form action="/teachers/question/delete/<%=currentQuestion._id%>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger">Delete Question</button>
+            </form>
+            <% } else { %>
+                <p><i>* This question has been created by another teacher and thus you cannot edit nor delete this question.</i></p>
+            <% } %>
+        </div>
 </div>

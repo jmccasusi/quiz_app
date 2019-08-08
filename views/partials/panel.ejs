@@ -16,6 +16,6 @@
 
     <% if(currentUser.classification==="teachers") {%>
     <a class="nav-link<% if(pageToRender == "exam" || pageToRender == "new_exam" || pageToRender == "show_exam") { %> active<% } %>" href="/teachers/exam">My Exams</a>
-    <a class="nav-link<% if(pageToRender == "question" || pageToRender == "new_question" || pageToRender == "show_question") { %> active<% } %>" href="/teachers/question">Question Bank</a>
+    <a class="nav-link<% if(pageToRender == "question" || pageToRender == "new_question" || pageToRender == "show_question" || pageToRender == "edit_question") { %> active<% } %>" href="/teachers/question">Question Bank</a>
     <% } %>
 </div>

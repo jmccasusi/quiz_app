@@ -13,7 +13,7 @@
                 <hr class="my-4">
         </form>
         <% if (!(typeof searchResults == 'undefined')) { %>
-        <div class="search-questions-list">
+        <div class="search-questions-list bg-light rounded p-3">
                 <p>Search results:</p>
                 <% if(searchResults.length === 0) { %>
                 <p>No questions matches the search query.</p>
@@ -40,7 +40,7 @@
         </div>
         <hr class="my-4">
         <% } %>
-        <div class="owned-questions-list">
+        <div class="owned-questions-list bg-light rounded p-3">
                 <% ownedQuestions = ownedQuestions.reverse(); %>
                 <% if(ownedQuestions.length === 0) { %>
                 <p>You currently don't have any created questions.</p>

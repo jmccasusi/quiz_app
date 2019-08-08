@@ -1,13 +1,13 @@
 <div class="jumbotron">
         <h1 class="display-4"><%= currentExam.title %></h1>
         <hr class="my-4">
-            <div class="form-row">
+            <div class="form-row bg-light rounded p-3">
                 <div class="form-group col-md-6">
                         <h5><%= currentExam.description %></h5>
                 </div>
             </div>
             <hr class="my-4">
-            <div class="form-row">
+            <div class="form-row bg-light rounded p-3">
                     <div class="form-group col-md-12">
                         <h5>Questions in this Exam:</h5>
                             <% if (examQuestions.length === 0) { %>
@@ -17,22 +17,31 @@
                                 <li><%= examQuestion.content %></li>
                             <% })} %>
                     </div>
+                    <a href="/teachers/question"><button type="button" class="btn btn-primary">Go to Question Bank</button></a>
             </div>
-            <a href="/teachers/question"><button type="button" class="btn btn-primary">Go to Question Bank</button></a>
             <hr class="my-4">
-        <% if(ownedGroups.length > 0) { %>
-        <form action="/teachers/group/addExam/<%=currentExam._id%>?_method=PUT" method="POST">
-            <h6>Send this Exam to:
-            <select name="targetGroupId" id="targetGroupId">
-                <% ownedGroups.forEach((ownedGroup) => { %>
-                <option value="<%=ownedGroup._id%>"><%=ownedGroup.name%></option>
-                <% }) %>
-            </select></h6>
-            <input type="submit" class="btn btn-primary" value="Send"></input>
-        </form>
-            <hr class="my-4">
-        <% } %>
+        <div class="d-flex justify-content-around">
+            <% if(ownedGroups.length > 0) { %>
+            <form action="/teachers/group/addExam/<%=currentExam._id%>?_method=PUT" method="POST">
+                <div class="form-group col-md-12">
+                    <h6>Send this Exam to:</h6>
+                    <select name="targetGroupId" id="targetGroupId">
+                        <% ownedGroups.forEach((ownedGroup) => { %>
+                        <option value="<%=ownedGroup._id%>"><%=ownedGroup.name%></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="form-group col-md-12">
+                        <input type="submit" class="form-control btn btn-outline-primary" value="Send">
+                 </div>
+            </form>
+            <% } %>
+        </div>
+        <hr class="my-4">
+        <div class="d-flex justify-content-around">
         <form action="/teachers/exam/delete/<%=currentExam._id%>?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-primary">Delete Exam</button>
+            <button type="submit" class="btn btn-danger">Delete Exam</button>
         </form>
+
+    </div>
 </div>

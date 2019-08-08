@@ -1,0 +1,39 @@
+<div class="jumbotron">
+        <h1 class="display-4">Edit Question</h1>
+        <hr class="my-4">
+        <form action="/teachers/question/new" method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="content">Question Content</label>
+                <input type="text" class="form-control" id="content" name="content" placeholder="Question" value="<%=currentQuestion.content%>" required>
+            </div>
+        </div>
+    
+        <hr class="my-4">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="name">Options for Answers</label>
+                <div id="answerOptionList">
+                    <% currentQuestion.options.forEach((option, index) => { %>
+                        <li>
+                            <input type="text" placeholder="Option" name="options" value="<%=option%>">&nbsp;
+                            <input type="radio" name="correctAnswerIndex" value="0"<% if(option === currentQuestion.correctAnswer) { %> checked="checked" <% } %>>&nbsp;&nbsp;Correct Answer
+                        </li>
+                    <% }) %>
+                    </div>
+                <br>
+                    <button id="add-option-btn" type="button" class="btn btn-primary">Add another option</button>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="content">Tags</label>
+                    <input type="text" class="form-control" id="tags" name="tags" placeholder="e.g. History, Science, Math, ..." <% if(typeof currentQuestion.tags != "undefined") { %> value="<%=currentQuestion.tags%>" <% } %> required>
+                </div>
+            </div>
+        <hr class="my-4">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        <hr class="my-4">
+        </form>
+    </div>

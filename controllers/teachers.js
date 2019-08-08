@@ -23,6 +23,16 @@ teachers.get('/question/new', (req, res) => {
 	});
 });
 
+teachers.get('/question/edit/:id', (req, res) => {
+	questionModel.Question.findById(req.params.id, (err, foundQuestion) => {
+		res.render('index.ejs', {
+			currentUser: req.session.currentUser,
+			pageToRender: "edit_question",
+			currentQuestion: foundQuestion
+		});
+	})
+});
+
 teachers.get('/question/:id', (req, res) => {
 	questionModel.Question.findById(req.params.id, (err, foundQuestion) => {
 		examModel.Exam.find({
