@@ -4,7 +4,8 @@ The SPHINX app is a tool that can be utilized by teachers in order to ease the p
 
 [https://obscure-sea-29705.herokuapp.com](https://obscure-sea-29705.herokuapp.com)
 
-![screenshot of page](screenshot-01.png 'Test screenshot')
+![screenshot of page](screenshot-1.png 'Test screenshot1')
+![screenshot of page](screenshot-2.png 'Test screenshot2')
 
 ## Features (Teachers)
 - Allows the teacher to create a new group, generating a unique join key that they can give to their students in order to join
