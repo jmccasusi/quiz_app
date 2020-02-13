@@ -36,3 +36,12 @@ The SPHINX app is a tool that can be utilized by teachers in order to ease the p
 - Home feed to be an announcement for incoming exams
 - Basic user profiles and messaging
 - Calendar for incoming events
+
+## Sample User Accounts for Testing
+- Email Address / Password / Role
+- thomasbarnes@gmail.com / 12345 / Math Teacher
+- lillymorgan@gmail.com / 12345 / Coding Teacher
+- lucasholmes@gmail.com / 12345 / Science Teacher
+- bellawells@gmail.com / 12345 / Student
+- ryanhorton@gmail.com / 12345 / Student
+- charleswalker@gmail.com / 12345 / Student
